@@ -1,0 +1,16 @@
+Windows:
+
+cd into Photographer-Weather-Assistant-Web-App and setup the virtual environment with:
+
+py -3 -m venv .venv
+.venv\Scripts\Activate (You must run this command everytime you want to edit this project)
+
+Windows may give you an error, start a powershell as administrator and run the following
+
+Set-ExecutionPolicy RemoteSigned 
+This allows you to run scripts that you've downloaded off the internet (like the activation script)
+
+Finally install the necessary modules inside the virtual environment 
+pip install flask
+pip install python-weather
+pip install flask[async]
