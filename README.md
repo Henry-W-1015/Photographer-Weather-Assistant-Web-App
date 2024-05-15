@@ -1,7 +1,11 @@
 # Photographer-Weather-Assistant-Web-App
 
 https://www.freelancer.com/projects/web-development/Photographer-Weather-Assistant-Web-App/details
+
 https://codesnippet.io/full-stack-weather-app/
+
+Some more about React:
+https://youtu.be/0-S5a0eXPoc?si=MiCp0EiPoBErLckm
 
 According to the request, we should do:
 Project Description:
