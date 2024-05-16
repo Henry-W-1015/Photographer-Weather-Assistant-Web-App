@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from weather import get_daily_city_weather, get_hourly_city_weather
 import json
 
 
 index = Flask(__name__)#references this file
+CORS(index) #enables all cross origin requests
 
 @index.route("/")
 def hello_world():
@@ -24,6 +26,11 @@ async def get_daily_weather_by_city():
     except Exception as e:
         return jsonify({'error': str(e)}), 400
     
+#returns 3 days of temps and precipitation in 3 hourly increments
+#example: {'day0': [{55: 0.0}, {54: 0.0}, {56: 0.0}, {56: 0.0}, {59: 0.0}, {57: 0.0}, {57: 0.0}],
+#'day1': [{52: 0.0}, {50: 0.0}, {53: 0.0}, {62: 0.0}, {68: 0.0}, {69: 0.0}, {66: 0.0}], 
+#'day2': [{57: 0.0}, {54: 0.0}, {56: 0.0}, {55: 0.0}, {63: 0.0}, {67: 0.0}, {62: 0.0}]}
+
 @index.route('/getHourlyWeatherByCity', methods=['GET'])
 async def get_hourly_weather_by_city():
     try:
@@ -35,4 +42,3 @@ async def get_hourly_weather_by_city():
 
 
 
-##Example route

@@ -1,13 +1,14 @@
 function ListGroup() {
   const items = ["New York", "San Francisco", "Tokyo", "London", "Paris"];
-
+//wrap code in {} to change dynamically, react needs unique key to keep track of items
+//
   return (
     <>
       <h1>List</h1>
       <ul className="list-group">
         {items.map((item) => (
           <li key={item}>{item}</li>
-        ))}
+        ))} 
         {/* <li className="list-group-item">An item</li>
         <li className="list-group-item">A second item</li>
         <li className="list-group-item">A third item</li>

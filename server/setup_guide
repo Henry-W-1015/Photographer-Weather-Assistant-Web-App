@@ -14,5 +14,8 @@ Finally install the necessary modules inside the virtual environment
 pip install flask
 pip install python-weather
 pip install flask[async]
+pip install flask-cors
 
+To run the server, make sure venv is activated,
+cd into the server directory
 flask --app index.py run
