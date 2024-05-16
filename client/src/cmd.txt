@@ -1,0 +1,6 @@
+need to install npm
+
+cd into client here
+npm run dev
+
+then goto localhost:5173/client
