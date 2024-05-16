@@ -7,10 +7,12 @@ py -3 -m venv .venv
 
 Windows may give you an error, start a powershell as administrator and run the following
 
-Set-ExecutionPolicy RemoteSigned 
+Set-ExecutionPolicy RemoteSigned
 This allows you to run scripts that you've downloaded off the internet (like the activation script)
 
-Finally install the necessary modules inside the virtual environment 
+Finally install the necessary modules inside the virtual environment
 pip install flask
 pip install python-weather
 pip install flask[async]
+
+flask --app index.py run
