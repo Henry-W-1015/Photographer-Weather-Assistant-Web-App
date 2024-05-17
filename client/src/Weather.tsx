@@ -1,12 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 /*************
  * Everything in this file is just here to test out the backend routes
  *************/
-
-
-
-
-
 
 //forecast that corresponds to 1 day
 interface DailyForecast {
@@ -49,10 +44,10 @@ const fetchDailyWeather = async (city: string): Promise<DayForecast | null> => {
 };
 
 //Functional react component, should update automatically when city changes
-const DailyWeatherComponent: React.FC = () =>{
-  const [city, setCity] = useState<string>('New York');
+const DailyWeatherComponent: React.FC = () => {
+  const [city, setCity] = useState<string>("New York");
   const [weatherData, setWeatherData] = useState<DayForecast | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);  
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const getDailyWeather = async () => {
@@ -60,26 +55,25 @@ const DailyWeatherComponent: React.FC = () =>{
       const data = await fetchDailyWeather(city);
       setWeatherData(data);
       setLoading(false);
-  }
+    };
 
-  getDailyWeather();
+    getDailyWeather();
+  }, [city]);
+  return (
+    //dummy code for testing purposes
+    <div>
+      <select onChange={(e) => setCity(e.target.value)} value={city}>
+        <option value="New York">New York</option>
+        <option value="San Francisco">San Francisco</option>
+        <option value="Tokyo">Tokyo</option>
+        <option value="London">London</option>
+        <option value="Paris">Paris</option>
+      </select>
 
-}, [city]);
-return (//dummy code for testing purposes
-  <div>
-    <select onChange={(e) => setCity(e.target.value)} value={city}>
-      <option value="New York">New York</option>
-      <option value="San Francisco">San Francisco</option>
-      <option value="Tokyo">Tokyo</option>
-      <option value="London">London</option>
-      <option value="Paris">Paris</option>
-    </select>
-
-    {loading && <div>Loading...</div>}
-    {/* {error && <div>{error.message}</div>} Display error message */}
-  </div>
-);
-
-}//ends DailyWeatherComponent
+      {loading && <div>Loading...</div>}
+      {/* {error && <div>{error.message}</div>} Display error message */}
+    </div>
+  );
+}; //ends DailyWeatherComponent
 
 export default DailyWeatherComponent;
