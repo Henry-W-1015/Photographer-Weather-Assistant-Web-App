@@ -15,6 +15,8 @@ pip install flask
 pip install python-weather
 pip install flask[async]
 pip install flask-cors
+pip install pymongo
+pip install python-dotenv
 
 To run the server, make sure venv is activated,
 cd into the server directory
