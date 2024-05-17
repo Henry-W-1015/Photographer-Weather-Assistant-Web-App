@@ -40,15 +40,59 @@ function ListGroup() {
             {item}
           </li>
         ))}
-
-        {/* <li className="list-group-item">An item</li>
-        <li className="list-group-item">A second item</li>
-        <li className="list-group-item">A third item</li>
-        <li className="list-group-item">A fourth item</li>
-        <li className="list-group-item">And a fifth one</li> */}
       </ul>
     </>
   );
 }
 
-export default ListGroup;
+// export default ListGroup;
+
+function BookmarkList() {
+  const [bookmarks, setBookmarks] = useState<string[]>([
+    "New York",
+    "San Francisco",
+    "Tokyo",
+    "London",
+    "Paris",
+  ]);
+  const [newBookmark, setNewBookmark] = useState("");
+
+  const addBookmark = () => {
+    if (newBookmark.trim() !== "") {
+      // Prevent adding empty bookmarks
+      setBookmarks([...bookmarks, newBookmark]);
+      setNewBookmark(""); // Clear the input field
+    }
+  };
+
+  const deleteBookmark = (index: number) => {
+    setBookmarks(bookmarks.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div>
+      <h1>Bookmark Locations</h1>
+
+      <div style={{ display: "flex", marginBottom: "10px" }}>
+        <input
+          type="text"
+          value={newBookmark}
+          onChange={(e) => setNewBookmark(e.target.value)}
+          placeholder="Enter new location"
+        />
+        <button onClick={addBookmark}>Add</button>
+      </div>
+
+      <ul className="list-group">
+        {bookmarks.map((bookmark, index) => (
+          <li className="list-group-item" key={index}>
+            {bookmark}
+            <button onClick={() => deleteBookmark(index)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default BookmarkList;
