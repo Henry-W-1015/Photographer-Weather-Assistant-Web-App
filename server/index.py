@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from weather import get_daily_city_weather, get_hourly_city_weather
-import json
+from database import establish_db_connection, insert_weather_day, fetch_record, fetch_all_records_for_name, update_weather_day, delete_weather_day
 
 
 index = Flask(__name__)#references this file
@@ -41,4 +41,4 @@ async def get_hourly_weather_by_city():
         return jsonify({'error': str(e)}), 400
 
 
-
+#TODO add routes that link to the CRUD operations in database.py
