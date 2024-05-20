@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function Clock() {
   const [time, setTime] = useState(new Date());
@@ -15,7 +15,7 @@ function Clock() {
     const hours = date.getHours().toString().padStart(2, "0");
     const minutes = date.getMinutes().toString().padStart(2, "0");
     const seconds = date.getSeconds().toString().padStart(2, "0");
-    return `${hours}:${minutes}:${seconds}`;
+    return `Local Time: ${hours}:${minutes}:${seconds}`;
   };
 
   return (

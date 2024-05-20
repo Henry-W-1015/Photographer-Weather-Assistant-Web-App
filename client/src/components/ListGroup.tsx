@@ -2,48 +2,48 @@
 
 import { useState } from "react";
 
-function ListGroup() {
-  let items = ["New York", "San Francisco", "Tokyo", "London", "Paris"];
+// function ListGroup() {
+//   let items = ["New York", "San Francisco", "Tokyo", "London", "Paris"];
 
-  // Hook
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+//   // Hook
+//   const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  // const clickHandler = (event: MouseEvent) => console.log(event);
+//   // const clickHandler = (event: MouseEvent) => console.log(event);
 
-  //wrap code in {} to change dynamically, react needs unique key to keep track of items
-  //
+//   //wrap code in {} to change dynamically, react needs unique key to keep track of items
+//   //
 
-  //const clickHandler = (event: MouseEvent) => console.log(event);
+//   //const clickHandler = (event: MouseEvent) => console.log(event);
 
-  return (
-    <>
-      <h1>List</h1>
-      {/* {items.length === 0 ? <p>No item found</p> : null} */}
-      {items.length === 0 && <p>No item found</p>}
-      <ul className="list-group">
-        {items.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
+//   return (
+//     <>
+//       <h1>List</h1>
+//       {/* {items.length === 0 ? <p>No item found</p> : null} */}
+//       {items.length === 0 && <p>No item found</p>}
+//       <ul className="list-group">
+//         {items.map((item) => (
+//           <li key={item}>{item}</li>
+//         ))}
 
-        {items.map((item, index) => (
-          <li
-            className={
-              selectedIndex === index
-                ? "list-group-item active"
-                : "list-group-item"
-            }
-            key={item}
-            onClick={() => {
-              setSelectedIndex(index);
-            }}
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-    </>
-  );
-}
+//         {items.map((item, index) => (
+//           <li
+//             className={
+//               selectedIndex === index
+//                 ? "list-group-item active"
+//                 : "list-group-item"
+//             }
+//             key={item}
+//             onClick={() => {
+//               setSelectedIndex(index);
+//             }}
+//           >
+//             {item}
+//           </li>
+//         ))}
+//       </ul>
+//     </>
+//   );
+// }
 
 // export default ListGroup;
 
@@ -71,7 +71,7 @@ function BookmarkList() {
 
   return (
     <div>
-      <h1>Bookmark Locations</h1>
+      <h1>Bookmarks </h1>
 
       <div style={{ display: "flex", marginBottom: "10px" }}>
         <input
@@ -87,7 +87,17 @@ function BookmarkList() {
         {bookmarks.map((bookmark, index) => (
           <li className="list-group-item" key={index}>
             {bookmark}
-            <button onClick={() => deleteBookmark(index)}>Delete</button>
+            <button
+              className="btn btn-primary float-mid"
+              onClick={() => console.log({ bookmark })}
+            >
+              View
+            </button>
+            <button
+              className="btn btn-close float-end"
+              aria-label="Close"
+              onClick={() => deleteBookmark(index)}
+            ></button>
           </li>
         ))}
       </ul>
