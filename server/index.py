@@ -27,10 +27,14 @@ async def get_daily_weather_by_city():
         return jsonify({'error': str(e)}), 400
     
 #returns 3 days of temps and precipitation in 3 hourly increments
-#example: {'day0': [{55: 0.0}, {54: 0.0}, {56: 0.0}, {56: 0.0}, {59: 0.0}, {57: 0.0}, {57: 0.0}],
-#'day1': [{52: 0.0}, {50: 0.0}, {53: 0.0}, {62: 0.0}, {68: 0.0}, {69: 0.0}, {66: 0.0}], 
-#'day2': [{57: 0.0}, {54: 0.0}, {56: 0.0}, {55: 0.0}, {63: 0.0}, {67: 0.0}, {62: 0.0}]}
+#example day
+'''
+{'day0': [{'time': '00:00', 'temp': 55, 'chance_rain': 0, 'cloud_cover_percent': 4, 'chance_of_sun': 88}, {'time': '03:00', 'temp': 51, 'chance_rain': 0, 'cloud_cover_percent': 3, 'chance_of_sun': 92}, 
+{'time': '06:00', 'temp': 52, 'chance_rain': 0, 'cloud_cover_percent': 0, 'chance_of_sun': 86}, {'time': '09:00', 'temp': 61, 'chance_rain': 0, 'cloud_cover_percent': 3, 'chance_of_sun': 92},
+{'time': '12:00', 'temp': 67, 'chance_rain': 0, 'cloud_cover_percent': 5, 'chance_of_sun': 87}, {'time': '15:00', 'temp': 68, 'chance_rain': 0, 'cloud_cover_percent': 64, 'chance_of_sun': 10},
+{'time': '18:00', 'temp': 64, 'chance_rain': 81, 'cloud_cover_percent': 89, 'chance_of_sun': 0}]
 
+'''
 @index.route('/getHourlyWeatherByCity', methods=['GET'])
 async def get_hourly_weather_by_city():
     try:
@@ -42,3 +46,4 @@ async def get_hourly_weather_by_city():
 
 
 #TODO add routes that link to the CRUD operations in database.py
+

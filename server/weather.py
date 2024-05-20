@@ -52,6 +52,7 @@ async def get_daily_city_weather(city_name):
 
         #convert the weather object to a json and return it
         print(weather_object)
+        # await client.close()
         return json.dumps(weather_object)
 
 async def get_hourly_city_weather(city_name):
@@ -64,7 +65,12 @@ async def get_hourly_city_weather(city_name):
           #may need to jsonify this
           hourly_weather.append({ 'time':hourly.time.strftime('%H:%M'),
                                   'temp':hourly.temperature,
-                                  'precip':hourly.precipitation})
+                                  'chance_rain':hourly.chances_of_rain,
+                                  # 'chance_snow':hourly.chances_of_snow,
+                                  'cloud_cover_percent':hourly.cloud_cover,
+                                  'chance_of_sun':hourly.chances_of_sunshine,
+                                  'type_weather':str(hourly.kind) 
+                                })
 
     # weather_object['day0': hourly_weather[0:7], "day1":hourly_weather[8:15], "day2":hourly_weather[16:23]]
       weather_object = {
@@ -72,7 +78,8 @@ async def get_hourly_city_weather(city_name):
         'day1': hourly_weather[8:15],
         'day2': hourly_weather[16:23]
       }
-    print(weather_object)
+    # print(weather_object)
+    # await client.close()
     return json.dumps(weather_object)
 
 if __name__ == '__main__':
@@ -81,6 +88,8 @@ if __name__ == '__main__':
   if os.name == 'nt':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-  asyncio.run(getweather())
-# asyncio.run(get_daily_city_weather("London"))
-asyncio.run(get_hourly_city_weather("London"))
+  # asyncio.run(getweather())
+# asyncio.run(get_daily_city_weather("Amherst Massachusetts"))
+# print('----------------------------------------------------------')
+# asyncio.run(get_daily_city_weather('Amherst New York'))
+# asyncio.run(get_hourly_city_weather("Amherst Massachusetts"))
