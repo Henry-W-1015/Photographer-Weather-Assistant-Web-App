@@ -64,7 +64,12 @@ async def get_hourly_city_weather(city_name):
           #may need to jsonify this
           hourly_weather.append({ 'time':hourly.time.strftime('%H:%M'),
                                   'temp':hourly.temperature,
-                                  'precip':hourly.precipitation})
+                                  'chance_rain':hourly.chances_of_rain,
+                                  # 'chance_snow':hourly.chances_of_snow,
+                                  'cloud_cover_percent':hourly.cloud_cover,
+                                  'chance_of_sun':hourly.chances_of_sunshine,
+                                  # 'type_weather':hourly.kind #kind is an enum and doesnt work with the json.dumps
+                                })
 
     # weather_object['day0': hourly_weather[0:7], "day1":hourly_weather[8:15], "day2":hourly_weather[16:23]]
       weather_object = {
@@ -81,6 +86,6 @@ if __name__ == '__main__':
   if os.name == 'nt':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-  asyncio.run(getweather())
+  # asyncio.run(getweather())
 # asyncio.run(get_daily_city_weather("London"))
 asyncio.run(get_hourly_city_weather("London"))

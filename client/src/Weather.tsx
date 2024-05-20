@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 /*************
  * Everything in this file is just here to test out the backend routes
  *************/
@@ -20,7 +21,9 @@ interface DayForecast {
 interface HourlyForecast {
   time: string; //HH:MM
   temp: number;
-  precip: number;
+  chance_rain: number;
+  cloud_cover_percent:number;
+  chance_of_sun:number;
 }
 //forecast for 3 days of 3 hour interval weather
 interface HourlyWeatherSet {
@@ -35,7 +38,7 @@ const fetchDailyWeather = async (city: string): Promise<DayForecast | null> => {
       `http://localhost:5000/getDailyWeatherByCity?name=${city}`
     );
     const data = await response.json();
-    console.log(data);
+    console.log("daily weather is \n" + data);
     return data as DayForecast;
   } catch (error) {
     console.error("Fetch error: ", error);
@@ -43,21 +46,49 @@ const fetchDailyWeather = async (city: string): Promise<DayForecast | null> => {
   }
 };
 
+const fetchHourlyWeather = async (city:string): Promise<HourlyWeatherSet | null> => {
+  try{
+    const response = await fetch(
+      `http://localhost:5000/getHourlyWeatherByCity?name=${city}`
+    )
+    const data = await response.json();
+    console.log("hourly weather is: \n"+ data);
+    return data as HourlyWeatherSet;
+  } catch(error){
+    console.error("Fetch error: ", error);
+    return null;
+  }
+} 
+
+
 //Functional react component, should update automatically when city changes
 const DailyWeatherComponent: React.FC = () => {
   const [city, setCity] = useState<string>("New York");
-  const [weatherData, setWeatherData] = useState<DayForecast | null>(null);
+  const [dailyWeatherData, setDailyWeatherData] = useState<DayForecast | null>(null);
+  const [hourlyWeatherData, setHourlyWeatherData] = useState<HourlyWeatherSet | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const getDailyWeather = async () => {
-      setLoading(true); //if we want a loading screen
-      const data = await fetchDailyWeather(city);
-      setWeatherData(data);
-      setLoading(false);
-    };
+    // const getDailyWeather = async () => {
+    //   setLoading(true); //if we want a loading screen
+    //   const data = await fetchDailyWeather(city);
+    //   setWeatherData(data);
+    //   setLoading(false);
+    // };
+    // const getHourlyWeather = async () => {
 
-    getDailyWeather();
+    // }
+    const getWeatherData = async () => {
+      setLoading(true); //for loading screen
+      const dailyWeather = await fetchDailyWeather(city);
+      setDailyWeatherData(dailyWeather);
+      const hourlyWeather = await fetchHourlyWeather(city);
+      setHourlyWeatherData(hourlyWeather)
+      
+    }
+
+    getWeatherData();
+    // getDailyWeather();
   }, [city]);
   return (
     //dummy code for testing purposes
