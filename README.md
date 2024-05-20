@@ -12,7 +12,7 @@ Project Description:
 Develop a web app that provides detailed weather forecasts with recommendations for the best days and times for real estate photo shoots. This tool would help photographers plan their shoots around optimal lighting conditions and weather, minimizing disruptions due to undesirable conditions.
 Key Features:
 Weekly Weather Forecast: Display a weekly weather forecast specifically highlighting the best times and worst times for photography based on light quality, chance of rain, and wind conditions.
-Twilight Time: Recommend best time to shoot Twilight Images (20 minutes before sunset or during sunrise.
+Twilight Time: Recommend best time to shoot Twilight Images 20 minutes before sunset or during sunrise.
 Photography Tips: Offer tips on how to shoot in various weather conditions, integrating real-world photography advice into the weather forecast.
 Customizable Alerts: Allow users to set alerts for their ideal shooting conditions and notify them when upcoming weather matches their preferences.
 Location-Based Forecasts: Users can input multiple locations and receive tailored forecasts for each, useful for planning shoots at various properties.
