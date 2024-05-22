@@ -22,8 +22,8 @@ interface HourlyForecast {
   time: string; //HH:MM
   temp: number;
   chance_rain: number;
-  cloud_cover_percent:number;
-  chance_of_sun:number;
+  cloud_cover_percent: number;
+  chance_of_sun: number;
 }
 //forecast for 3 days of 3 hour interval weather
 interface HourlyWeatherSet {
@@ -46,26 +46,30 @@ const fetchDailyWeather = async (city: string): Promise<DayForecast | null> => {
   }
 };
 
-const fetchHourlyWeather = async (city:string): Promise<HourlyWeatherSet | null> => {
-  try{
+const fetchHourlyWeather = async (
+  city: string
+): Promise<HourlyWeatherSet | null> => {
+  try {
     const response = await fetch(
       `http://localhost:5000/getHourlyWeatherByCity?name=${city}`
-    )
+    );
     const data = await response.json();
-    console.log("hourly weather is: \n"+ data);
+    console.log("hourly weather is: \n" + data);
     return data as HourlyWeatherSet;
-  } catch(error){
+  } catch (error) {
     console.error("Fetch error: ", error);
     return null;
   }
-} 
-
+};
 
 //Functional react component, should update automatically when city changes
 const DailyWeatherComponent: React.FC = () => {
   const [city, setCity] = useState<string>("New York");
-  const [dailyWeatherData, setDailyWeatherData] = useState<DayForecast | null>(null);
-  const [hourlyWeatherData, setHourlyWeatherData] = useState<HourlyWeatherSet | null>(null);
+  const [dailyWeatherData, setDailyWeatherData] = useState<DayForecast | null>(
+    null
+  );
+  const [hourlyWeatherData, setHourlyWeatherData] =
+    useState<HourlyWeatherSet | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -83,9 +87,8 @@ const DailyWeatherComponent: React.FC = () => {
       const dailyWeather = await fetchDailyWeather(city);
       setDailyWeatherData(dailyWeather);
       const hourlyWeather = await fetchHourlyWeather(city);
-      setHourlyWeatherData(hourlyWeather)
-      
-    }
+      setHourlyWeatherData(hourlyWeather);
+    };
 
     getWeatherData();
     // getDailyWeather();

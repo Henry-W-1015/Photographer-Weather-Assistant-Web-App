@@ -2,7 +2,7 @@ import "./App.css";
 
 import DailyWeatherComponent from "./Weather";
 import Clock from "./components/Clockcomp";
-
+import TestAlbum from "./components/testing";
 import Album from "./components/Album";
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
         <Clock />
         <DailyWeatherComponent></DailyWeatherComponent>
 
-        <Album />
+        <TestAlbum />
       </div>
     </>
   );
