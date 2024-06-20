@@ -1,0 +1,184 @@
+import React from "react";
+import Button from "./Button"; // Import your Button component
+
+// Updated Weather interface to match the new data structure
+interface Weather {
+ date: string;
+ time: string;
+ temperature: string;
+ light: string;
+ rain_chance: string;
+}
+interface WeatherCardProps {
+ city: string;  onAlertClick: () => void;  onDeleteClick: () => void;  backgroundColor?: string;  weatherData: Weather[]; 
+}
+const WeatherCard: React.FC<WeatherCardProps> = ({ 
+ city, 
+ onAlertClick, 
+ onDeleteClick, 
+ backgroundColor, 
+ weatherData,  
+}) => {   const currentWeather = weatherData[0];   
+  //Function to get the weather of the next hour
+  const getNextHourWeather = () => {
+ const currentDate = new Date(currentWeather.date);
+ const currentHour = currentDate.getHours();
+ const nextHour = (currentHour + 1) % 24;
+ const nextHourString = `${nextHour.toString().padStart(2, "0")}:00`;
+
+ // Find the next hour's weather forecast in the current day's data
+ for (const forecast of weatherData) {
+   if (forecast.time === nextHourString) {      return forecast;    }  }  return null; };
+
+  const nextHourWeather = getNextHourWeather();   
+  const weatherBackgroundColor = getBackgroundColor(nextHourWeather?.light ?? "");
+ 
+  return (
+   <div className="col-md-4">
+     <div className="card mb-4 shadow-sm">
+    
+       <svg
+         className="bd-placeholder-img card-img-top"
+         width="100%"
+         height="225"          preserveAspectRatio="xMidYMid slice"          focusable="false"          role="img"          aria-label="Weather Card"          style={{ backgroundColor: weatherBackgroundColor }}        >  <title>Weather Card</title> 
+         {nextHourWeather ? (
+           <>
+             <text x="50%" y="30%" fill="white" textAnchor="middle" dominantBaseline="middle" fontSize="2em">
+               {nextHourWeather.temperature}°C
+             </text>
+             <text x="50%" y="60%" fill="white" textAnchor="middle" dominantBaseline="middle">
+               {nextHourWeather.light}
+             </text>
+              <text x="10%" y="80%" fill="white" textAnchor="start" dominantBaseline="middle">
+               Chance of Rain: {nextHourWeather.rain_chance}%
+             </text> 
+           </>
+         ) : (  <text x="50%" y="50%" fill="white" textAnchor="middle" dominantBaseline="middle">
+           No data available
+         </text>)}        </svg>        <div className="card-body">         <p className="card-text">{city}</p>          <div className="d-flex justify-content-between align-items-center">  <div className="btn-group">              <Button color="sm btn-outline-secondary" onClick={onAlertClick}>                Alert              </Button>              <Button  color="sm btn-outline-secondary" onClick={onDeleteClick}>                Delete              </Button>            </div>            <small className="text-muted">Last updated</small>          </div>        </div>      </div>    </div>  ); };  const getBackgroundColor = (light: string) => {      switch (light) {        case "Sunny":          return "#F7DC6F";        // Yellow        case "Partly Cloudy":          return "#ADD8E6";  // Light Blue        case "Cloudy":          return "grey";        case "Rain":          return "blue";  // Add more cases for different weather conditions        default:          return "#55595c";      // Default Gray      }   };
+export default WeatherCard; 
+
+***********************************************************************************************************************
+import React, { useState } from "react";
+
+// Import your Button component
+import Button from "./Button";
+
+// Updated weather data interfaces
+interface Condition {
+  time: string;
+  temperature: string;
+  light: string;
+  rain_chance: string;
+}
+
+interface Day {
+  date: string;
+  conditions: Condition[];
+}
+
+interface WeatherData {
+  city: string;
+  forecast: Day[];
+}
+
+function getNextHourWeather(weatherData: WeatherData): Condition | null {
+  const now = new Date();
+  const hours = now.getHours();
+  const nextHour = (hours + 1) % 24;
+  const nextHourString = `${nextHour.toString().padStart(2, "0")}:00`;
+
+  // Find the relevant day's forecast
+  const dayForecast = weatherData.forecast.find((day) =>
+    new Date(day.date).toISOString().split("T")[0] === now.toISOString().split("T")[0]
+  );
+
+  if (!dayForecast) {
+    return null; // Return null if no forecast found for the current day
+  }
+
+  // Find the condition matching the next hour within the day's forecast
+  const nextHourCondition = dayForecast.conditions.find(
+    (condition) => condition.time === nextHourString
+  );
+
+  return nextHourCondition || null; // Return the condition or null if no match found
+}
+
+const getBackgroundColor = (light: string) => {
+  switch (light) {
+    case "Sunny":
+      return "#F7DC6F"; // Yellow
+    case "Mostly Sunny":
+      return "#FFD54F"; // Gold
+    case "Partly Cloudy":
+      return "#ADD8E6"; // Light Blue
+    case "Cloudy":
+      return "#B0B0B0"; // Grey
+    case "Rain":
+      return "#87CEEB"; // Sky Blue
+    case "Drizzle":
+      return "#A9A9A9"; // Dark Grey
+    default:
+      return "#55595c"; // Default Gray
+  }
+};
+
+interface WeatherCardProps {
+  city: string;
+  onAlertClick: () => void;
+  onDeleteClick: () => void;
+  weatherData: WeatherData; // Updated weatherData type
+}
+
+const WeatherCard: React.FC<WeatherCardProps> = ({
+  city,
+  onAlertClick,
+  onDeleteClick,
+  weatherData,
+}) => {   const nextHourWeather = getNextHourWeather(weatherData);
+
+  const backgroundColor = nextHourWeather ? getBackgroundColor(nextHourWeather.light) : "#55595c";
+
+  return (
+    <div className="col-md-4">
+      <div className="card mb-4 shadow-sm">
+        <svg
+          className="bd-placeholder-img card-img-top"
+          width="100%"
+          height="225"
+          preserveAspectRatio="xMidYMid slice"
+          focusable="false"
+          role="img"
+          aria-label="Placeholder: Thumbnail"
+          style={{ backgroundColor }} // Apply the background color
+        >
+          <title>Placeholder</title>
+          <rect width="100%" height="100%" fill={backgroundColor} />          <text x="50%" y="50%" fill="white" dy=".3em" textAnchor="middle">
+            {nextHourWeather ? (
+              <>
+                {nextHourWeather.time}  <tspan dy="1.2em">{nextHourWeather.temperature}°C</tspan> <tspan dy="1.2em">{nextHourWeather.light}</tspan>
+              </>
+            ) : (
+              "No data available"
+            )}
+          </text>
+        </svg>
+        <div className="card-body">
+          <p className="card-text">{city}</p>
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="btn-group">
+              <Button color="sm btn-outline-secondary" onClick={onAlertClick}>
+                Alert
+              </Button>
+              <Button color="sm btn-outline-secondary" onClick={onDeleteClick}>  Delete  </Button>
+            </div>
+            <small className="text-muted">Last time updated</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+export default WeatherCard; 
+
